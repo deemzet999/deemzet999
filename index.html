@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>DMZH4CK DDoS Attacker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #1d1f20, #121315);
+    color: #e0e0e0;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+  header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    color: #ff3c00;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #ff3c00;
+  }
+  header p {
+    font-size: 1.1rem;
+    color: #bbb;
+    margin-top: 0.25rem;
+  }
+  form {
+    background: #27292b;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #ff3c0080;
+    width: 100%;
+    max-width: 400px;
+  }
+  label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    color: #ccc;
+  }
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    background: #1b1d1e;
+    color: #eee;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.2s ease;
+  }
+  input[type="text"]:focus,
+  input[type="number"]:focus {
+    outline: none;
+    background: #333639;
+  }
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #ff3c00;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1rem;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 15px #ff3c00;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  button:hover {
+    background: #ff1c00;
+    box-shadow: 0 0 25px #ff1c00;
+  }
+  #log {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    overflow-y: auto;
+    background: #111;
+    border-radius: 10px;
+    padding: 0.75rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #0f0;
+    user-select: text;
+  }
+  @media (max-width: 400px) {
+    body {
+      padding: 1rem 0.5rem;
+    }
+    form {
+      padding: 1rem;
+      width: 100%;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    #log {
+      max-width: 100%;
+      height: 150px;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>DMZH4CK</h1>
+  <p>DDoS Attacker</p>
+</header>
+<form id="ddosForm" autocomplete="off">
+  <label for="targetURL">Target URL (http:// or https://)</label>
+  <input type="text" id="targetURL" name="targetURL" placeholder="https://example.com" required pattern="https?://.+" />
+  <label for="requestsCount">Number of Requests</label>
+  <input type="number" id="requestsCount" name="requestsCount" placeholder="100" min="1" max="1000" required />
+  <button type="submit">Start Attack</button>
+</form>
+<div id="log" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+  const form = document.getElementById('ddosForm');
+  const log = document.getElementById('log');
+
+  function addLog(message) {
+    const time = new Date().toLocaleTimeString();
+    log.textContent += `[${time}] ${message}\n`;
+    log.scrollTop = log.scrollHeight;
+  }
+
+  // Simulate sending HTTP requests repeatedly - harmless simulation only to demonstrate UI and delays
+  async function simulateAttack(url, count) {
+    addLog(`Starting simulated attack on ${url} with ${count} requests...`);
+    for (let i = 1; i <= count; i++) {
+      await new Promise(resolve => setTimeout(resolve, 50));
+      addLog(`Request #${i} sent to ${url}`);
+    }
+    addLog('Attack simulation completed.');
+  }
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const url = form.targetURL.value.trim();
+    const count = Number(form.requestsCount.value);
+    if (!url || count < 1) {
+      addLog('Please enter valid target URL and number of requests.');
+      return;
+    }
+    addLog('');
+    simulateAttack(url, count);
+  });
+</script>
+</body>
+</html>
+
+```
